@@ -12,10 +12,11 @@ public class Parser implements IParser {
         tokenizer.open(fileName);
 
         //tokenizer.moveNext();
-        while (tokenizer.current().token() != Token.EOF){
+        while (tokenizer.getNextLexeme().token() != Token.EOF){
 
             tokenizer.moveNext();
         }
+        System.out.println("This is the end my beautiful friend");
 
 
     }

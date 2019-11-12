@@ -23,6 +23,10 @@ public class Tokenizer implements ITokenizer {
         return currentLexeme;
     }
 
+    public Lexeme getNextLexeme(){
+        return nextLexeme;
+    }
+
     @Override
     public void moveNext() throws IOException, TokenizerException {
         if(scanner == null){
