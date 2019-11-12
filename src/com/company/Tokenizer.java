@@ -14,8 +14,6 @@ public class Tokenizer implements ITokenizer {
         scanner.moveNext();
 
         nextLexeme = extractLexeme();
-        currentLexeme = nextLexeme;
-
     }
 
     @Override
@@ -23,7 +21,7 @@ public class Tokenizer implements ITokenizer {
         return currentLexeme;
     }
 
-    public Lexeme getNextLexeme(){
+    public Lexeme peekNextLexeme(){
         return nextLexeme;
     }
 
@@ -32,11 +30,9 @@ public class Tokenizer implements ITokenizer {
         if(scanner == null){
             throw new IOException("No open file");
         }
-        currentLexeme = nextLexeme;
         if(nextLexeme.token() != Token.EOF){
             nextLexeme = extractLexeme();
         }
-
     }
 
     @Override
@@ -83,10 +79,22 @@ public class Tokenizer implements ITokenizer {
                 return new Lexeme(currentChar, Token.NULL);
 
                 default:
-                    if(currentChar >= 'a' && currentChar <= 'z'){
-                        return new Lexeme(currentChar, Token.IDENT);
-                    }else if(currentChar >= '0' && currentChar <= '9'){
-                        return new Lexeme(currentChar, Token.INT_LIT);
+                    if(Character.isLetter(currentChar) && currentChar >= 'a' && currentChar <= 'z'){
+                        StringBuilder letterBuilder = new StringBuilder();
+                        while (Character.isLetter(currentChar)){
+                            letterBuilder.append(currentChar);
+                            currentChar = scanner.current();
+                            scanner.moveNext();
+                        }
+                        return new Lexeme(letterBuilder.toString(), Token.IDENT);
+                    }else if(Character.isDigit(currentChar) && currentChar >= '0' && currentChar <= '9'){
+                        StringBuilder digitBuilder = new StringBuilder();
+                        while (Character.isDigit(currentChar)){
+                            digitBuilder.append(currentChar);
+                            currentChar = scanner.current();
+                            scanner.moveNext();;
+                        }
+                        return new Lexeme(digitBuilder.toString(), Token.INT_LIT);
                     }
                     throw new TokenizerException("Illegal token found in file!");
         }

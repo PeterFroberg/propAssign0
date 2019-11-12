@@ -8,25 +8,17 @@ public class Parser implements IParser {
 
     @Override
     public void open(String fileName) throws IOException, TokenizerException {
-        //tokenizer = new Tokenizer();
         tokenizer.open(fileName);
-
-        //tokenizer.moveNext();
-        while (tokenizer.getNextLexeme().token() != Token.EOF){
-
+        while (tokenizer.peekNextLexeme().token() != Token.EOF) {
             tokenizer.moveNext();
         }
-        System.out.println("This is the end my beautiful friend");
-
-
     }
 
     @Override
     public INode parse() throws IOException, TokenizerException, ParserException {
-        if(tokenizer == null){
+        if (tokenizer == null) {
             throw new IOException("No file open");
         }
-
         return null;
     }
 
