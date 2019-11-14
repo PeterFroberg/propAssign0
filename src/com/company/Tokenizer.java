@@ -30,6 +30,9 @@ public class Tokenizer implements ITokenizer {
         if(scanner == null){
             throw new IOException("No open file");
         }
+
+        currentLexeme = nextLexeme;
+
         if(nextLexeme.token() != Token.EOF){
             nextLexeme = extractLexeme();
         }
@@ -99,5 +102,29 @@ public class Tokenizer implements ITokenizer {
                     throw new TokenizerException("Illegal token found in file!");
         }
 
+    }
+
+    public Scanner getScanner() {
+        return scanner;
+    }
+
+    public void setScanner(Scanner scanner) {
+        this.scanner = scanner;
+    }
+
+    public Lexeme getCurrentLexeme() {
+        return currentLexeme;
+    }
+
+    public void setCurrentLexeme(Lexeme currentLexeme) {
+        this.currentLexeme = currentLexeme;
+    }
+
+    public Lexeme getNextLexeme() {
+        return nextLexeme;
+    }
+
+    public void setNextLexeme(Lexeme nextLexeme) {
+        this.nextLexeme = nextLexeme;
     }
 }

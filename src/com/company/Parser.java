@@ -9,17 +9,34 @@ public class Parser implements IParser {
     @Override
     public void open(String fileName) throws IOException, TokenizerException {
         tokenizer.open(fileName);
+        tokenizer.setCurrentLexeme(tokenizer.getNextLexeme());
+        tokenizer.moveNext();
     }
 
     @Override
-    public INode parse() throws IOException, TokenizerException, ParserException {
+    public INode parse() throws Exception {
+
+        BlockNode rootNode = new BlockNode(tokenizer);
+
         if (tokenizer == null) {
             throw new IOException("No file open");
         }
-        while (tokenizer.peekNextLexeme().token() != Token.EOF) {
-            tokenizer.moveNext();
-        }
-        return null;
+        //tokenizer.moveNext();
+
+        //rootNode.evaluate()
+
+
+        //tokenizer.moveNext();
+
+
+        //System.out.println("test");
+
+
+
+        //while (tokenizer.peekNextLexeme().token() != Token.EOF) {
+        //    tokenizer.moveNext();
+        //}
+        return rootNode;
     }
 
     @Override
