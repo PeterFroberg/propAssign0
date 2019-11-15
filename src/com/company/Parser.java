@@ -16,7 +16,7 @@ public class Parser implements IParser {
     @Override
     public INode parse() throws Exception {
 
-        BlockNode rootNode = new BlockNode(tokenizer);
+        BlockNode rootNode = new BlockNode(tokenizer, 0);
 
         if (tokenizer == null) {
             throw new IOException("No file open");

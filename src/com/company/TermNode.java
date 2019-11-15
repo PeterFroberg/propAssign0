@@ -7,31 +7,21 @@ public class TermNode implements INode {
     private FactorNode factor;
     private Lexeme operator;
     private TermNode term;
+    private int nodeAtLevel;
 
-    public TermNode(Tokenizer tokenizer) throws Exception {
-        factor = new FactorNode(tokenizer);
+    public TermNode(Tokenizer tokenizer, int nodeAtLevel) throws Exception {
+        this.nodeAtLevel = nodeAtLevel;
+        factor = new FactorNode(tokenizer, nodeAtLevel + 1);
 
         if(tokenizer.getCurrentLexeme().token() == Token.MULT_OP || tokenizer.getCurrentLexeme().token() == Token.DIV_OP){
-            System.out.println("TermNode: " + tokenizer.getCurrentLexeme().toString());
+            System.out.println("TermNode: " + tokenizer.getCurrentLexeme().toString() + " - NodeLevel: " + nodeAtLevel);
+            operator = tokenizer.getCurrentLexeme();
             tokenizer.moveNext();
             if(tokenizer.getCurrentLexeme().token() == Token.INT_LIT || tokenizer.getCurrentLexeme().token() == Token.IDENT || tokenizer.getCurrentLexeme().token() == Token.LEFT_PAREN){
-                System.out.println("TermNode: " + tokenizer.getCurrentLexeme().toString());
-                term = new TermNode(tokenizer);
+                System.out.println("TermNode: " + tokenizer.getCurrentLexeme().toString() + " - NodeLevel: " + nodeAtLevel);
+                term = new TermNode(tokenizer, nodeAtLevel + 1);
             }
         }
-
-
-        /*if(tokenizer.getCurrentLexeme().token() != Token.MULT_OP && tokenizer.getCurrentLexeme().token() != Token.DIV_OP){
-            throw new ParserException("Wrong token found in TERMNODE MULT_OP or DIV_OP expected! " + tokenizer.getCurrentLexeme().token().toString() + "was found");
-        }
-        System.out.println(tokenizer.getCurrentLexeme().toString());
-        tokenizer.moveNext();
-        if(tokenizer.getCurrentLexeme().token() !=  Token.IDENT && tokenizer.getCurrentLexeme().token() != Token.INT_LIT && tokenizer.getCurrentLexeme().token() != Token.LEFT_PAREN){
-            throw new ParserException("Wrong token found in TERMNODE MULT_OP or DIV_OP expected! " + tokenizer.getCurrentLexeme().token().toString() + "was found");
-        }
-        System.out.println(tokenizer.getCurrentLexeme().toString());
-        term = new TermNode(tokenizer);*/
-
     }
 
     @Override
@@ -41,6 +31,21 @@ public class TermNode implements INode {
 
     @Override
     public void buildString(StringBuilder builder, int tabs) {
+        builder.append(insertTabs(tabs) + "TermNode\n");
+        if(factor != null){
+            factor.buildString(builder, tabs + 1);
+            builder.append(insertTabs(tabs +1 ) + operator + "\n");
+        }
 
+
+
+    }
+
+    private String insertTabs(int tabs){
+        String tabsToadd = "";
+        for (int i = 0; i < tabs; i++) {
+            tabsToadd = tabsToadd + "\t";
+        }
+        return tabsToadd;
     }
 }
