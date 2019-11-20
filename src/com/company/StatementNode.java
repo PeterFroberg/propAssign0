@@ -4,30 +4,52 @@ public class StatementNode implements INode {
 
     private AssignmentNode assignment;
     private StatementNode statment;
-    private int nodeAtLevel;
 
-    public StatementNode(Tokenizer tokenizer, int nodeAtLevel) throws Exception{
-        this.nodeAtLevel = nodeAtLevel;
+    public StatementNode(Tokenizer tokenizer) throws Exception{
         if (tokenizer.getCurrentLexeme().token() == Token.IDENT) {
-            System.out.println("StementNode: " + tokenizer.getCurrentLexeme().toString() + " - NodeLevel: " + nodeAtLevel);
-            assignment = new AssignmentNode(tokenizer, nodeAtLevel + 1);
-            statment = new StatementNode(tokenizer, nodeAtLevel + 1);
+            System.out.println("StementNode: " + tokenizer.getCurrentLexeme().toString() + " - NodeLevel: ");
+            assignment = new AssignmentNode(tokenizer);
+            statment = new StatementNode(tokenizer);
         }
+
 
 
     }
 
     @Override
     public Object evaluate(Object[] args) throws Exception {
-        return null;
+
+        StringBuilder stringBuilder = new StringBuilder();
+        if(assignment != null) {
+
+            VarResult currentResult = (VarResult)assignment.evaluate(args);
+
+            stringBuilder.append(currentResult.getId() + " = " + currentResult.getValue() + "\n");
+
+            for(int i = 0; i < args.length; i++) {
+                if (args[i] != null) {
+                    VarResult curRes = (VarResult) args[i];
+                    if (curRes.getId().equals(currentResult.getId())) {
+                        args[i] = currentResult;
+                        break;
+                    }
+                }else{
+                    args[i] = currentResult;
+                    break;
+                }
+            }
+            stringBuilder.append(statment.evaluate(args));
+        }
+
+
+        return stringBuilder;
     }
 
     @Override
     public void buildString(StringBuilder builder, int tabs) {
-        for(int i = 0; i < tabs; i++){
-            builder.append("\t");
-        }
-        builder.append("StatmentNode\n");
+
+        builder.append(insertTabs(tabs) + "StatmentNode\n");
+
         if(assignment != null){
             assignment.buildString(builder, tabs + 1);
         }
@@ -35,5 +57,12 @@ public class StatementNode implements INode {
             statment.buildString(builder,tabs + 1);
         }
 
+    }
+    private String insertTabs(int tabs){
+        String tabsToadd = "";
+        for (int i = 0; i < tabs; i++) {
+            tabsToadd = tabsToadd + "\t";
+        }
+        return tabsToadd;
     }
 }

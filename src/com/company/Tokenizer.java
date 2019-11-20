@@ -21,19 +21,15 @@ public class Tokenizer implements ITokenizer {
         return currentLexeme;
     }
 
-    public Lexeme peekNextLexeme(){
-        return nextLexeme;
-    }
-
     @Override
     public void moveNext() throws IOException, TokenizerException {
-        if(scanner == null){
+        if (scanner == null) {
             throw new IOException("No open file");
         }
 
         currentLexeme = nextLexeme;
 
-        if(nextLexeme.token() != Token.EOF){
+        if (nextLexeme.token() != Token.EOF) {
             nextLexeme = extractLexeme();
         }
     }
@@ -52,55 +48,82 @@ public class Tokenizer implements ITokenizer {
     private Lexeme extractLexeme() throws IOException, TokenizerException {
         // TODO: implement the lexeme extraction algorithm
         consumeWhiteSpaces();
-        char currentChar = scanner.current();
-        scanner.moveNext();
+        //char currentChar = scanner.current();
+        //scanner.moveNext();
 
-        switch (currentChar){
+        Lexeme tempLexeme;
+        switch (scanner.current()) {
             case '+':
-                return new Lexeme(currentChar, Token.ADD_OP);
+                tempLexeme = new Lexeme(scanner.current(), Token.ADD_OP);
+                scanner.moveNext();
+                return tempLexeme;
             case '-':
-                return new Lexeme(currentChar, Token.SUB_OP);
+                tempLexeme = new Lexeme(scanner.current(), Token.SUB_OP);
+                scanner.moveNext();
+                return tempLexeme;
             case '*':
-                return new Lexeme(currentChar, Token.MULT_OP);
+                tempLexeme = new Lexeme(scanner.current(), Token.MULT_OP);
+                scanner.moveNext();
+                return tempLexeme;
             case '/':
-                return new Lexeme(currentChar, Token.DIV_OP);
+                tempLexeme = new Lexeme(scanner.current(), Token.DIV_OP);
+                scanner.moveNext();
+                return tempLexeme;
             case '{':
-                return new Lexeme(currentChar, Token.LEFT_CURLY);
+                tempLexeme = new Lexeme(scanner.current(), Token.LEFT_CURLY);
+                scanner.moveNext();
+                return tempLexeme;
             case '}':
-                return new Lexeme(currentChar, Token.RIGHT_CURLY);
+                tempLexeme = new Lexeme(scanner.current(), Token.RIGHT_CURLY);
+                scanner.moveNext();
+                return tempLexeme;
             case '(':
-                return new Lexeme(currentChar, Token.LEFT_PAREN);
+                tempLexeme = new Lexeme(scanner.current(), Token.LEFT_PAREN);
+                scanner.moveNext();
+                return tempLexeme;
             case ')':
-                return new Lexeme(currentChar, Token.RIGHT_PAREN);
+                tempLexeme = new Lexeme(scanner.current(), Token.RIGHT_PAREN);
+                scanner.moveNext();
+                return tempLexeme;
             case '=':
-                return new Lexeme(currentChar, Token.ASSIGN_OP);
+                tempLexeme = new Lexeme(scanner.current(), Token.ASSIGN_OP);
+                scanner.moveNext();
+                return tempLexeme;
             case ';':
-                return new Lexeme(currentChar,Token.SEMICOLON);
+                tempLexeme = new Lexeme(scanner.current(), Token.SEMICOLON);
+                scanner.moveNext();
+                return tempLexeme;
             case Scanner.EOF:
-                return new Lexeme(currentChar, Token.EOF);
+                tempLexeme = new Lexeme(scanner.current(), Token.EOF);
+                scanner.moveNext();
+                return tempLexeme;
             case Scanner.NULL:
-                return new Lexeme(currentChar, Token.NULL);
+                tempLexeme = new Lexeme(scanner.current(), Token.NULL);
+                scanner.moveNext();
+                return tempLexeme;
 
-                default:
-                    if(Character.isLetter(currentChar) && currentChar >= 'a' && currentChar <= 'z'){
-                        StringBuilder letterBuilder = new StringBuilder();
-                        while (Character.isLetter(currentChar)){
-                            letterBuilder.append(currentChar);
-                            currentChar = scanner.current();
-                            scanner.moveNext();
-                        }
-                        return new Lexeme(letterBuilder.toString(), Token.IDENT);
-                    }else if(Character.isDigit(currentChar) && currentChar >= '0' && currentChar <= '9'){
-                        StringBuilder digitBuilder = new StringBuilder();
-                        while (Character.isDigit(currentChar)){
-                            digitBuilder.append(currentChar);
-                            currentChar = scanner.current();
-                            scanner.moveNext();;
-                        }
-                        return new Lexeme(digitBuilder.toString(), Token.INT_LIT);
+            default:
+                if (Character.isLetter(scanner.current()) && scanner.current() >= 'a' && scanner.current() <= 'z') {
+                    StringBuilder letterBuilder = new StringBuilder();
+                    while (Character.isLetter(scanner.current())) {
+                        letterBuilder.append(scanner.current());
+                        scanner.moveNext();
+                        //currentChar = scanner.current();
                     }
-                    throw new TokenizerException("Illegal token found in file!");
+                    return new Lexeme(letterBuilder.toString(), Token.IDENT);
+                } else if (Character.isDigit(scanner.current()) && scanner.current() >= '0' && scanner.current() <= '9') {
+                    StringBuilder digitBuilder = new StringBuilder();
+                    while (Character.isDigit(scanner.current())) {
+                        digitBuilder.append(scanner.current());
+                        scanner.moveNext();
+                        //currentChar = scanner.current();
+                    }
+                    return new Lexeme(digitBuilder.toString(), Token.INT_LIT);
+                }
+                throw new TokenizerException("Illegal token found in file!");
+
         }
+
 
     }
 

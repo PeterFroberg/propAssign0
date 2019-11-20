@@ -4,22 +4,24 @@ public class AssignmentNode implements INode {
 
     private Lexeme id;
     private ExpressionNode expression;
-    private int nodeAtLevel;
 
-    public AssignmentNode(Tokenizer tokenizer, int nodeAtLevel) throws Exception {
-        this.nodeAtLevel = nodeAtLevel;
 
-        tokenizer.moveNext();
+    public AssignmentNode(Tokenizer tokenizer) throws Exception {
 
-        if (tokenizer.getCurrentLexeme().token() == Token.ASSIGN_OP) {
-            System.out.println("AssignmentNode: " + tokenizer.getCurrentLexeme().token().toString() + " - NodeLevel: " + nodeAtLevel);
-            tokenizer.moveNext();
+        if(tokenizer.getCurrentLexeme().token() == Token.IDENT) {
             id = tokenizer.getCurrentLexeme();
-            expression = new ExpressionNode(tokenizer, nodeAtLevel + 1);
+            tokenizer.moveNext();
 
-            if (tokenizer.getCurrentLexeme().token() == Token.SEMICOLON) {
-                System.out.println("AssignmentNode: " + tokenizer.getCurrentLexeme().token().toString() + " - NodeLevel: " + nodeAtLevel);
+            if (tokenizer.getCurrentLexeme().token() == Token.ASSIGN_OP) {
+                System.out.println("AssignmentNode: " + tokenizer.getCurrentLexeme().token().toString() + " - NodeLevel: ");
+                //id = tokenizer.getCurrentLexeme();
                 tokenizer.moveNext();
+                expression = new ExpressionNode(tokenizer);
+
+                if (tokenizer.getCurrentLexeme().token() == Token.SEMICOLON) {
+                    System.out.println("AssignmentNode: " + tokenizer.getCurrentLexeme().token().toString() + " - NodeLevel: ");
+                    tokenizer.moveNext();
+                }
             }
         }
     }
@@ -27,16 +29,24 @@ public class AssignmentNode implements INode {
 
     @Override
     public Object evaluate(Object[] args) throws Exception {
-        return null;
+
+        return new VarResult(id.value().toString(), Double.parseDouble(expression.evaluate(args).toString()));
     }
 
     @Override
     public void buildString(StringBuilder builder, int tabs) {
 
         builder.append(insertTabs(tabs) + "AssigmentNode\n" + insertTabs(tabs +1) + id + "\n" + insertTabs(tabs + 1) + Token.ASSIGN_OP + " =\n");
+        /*if(id != null){
+            builder.append(insertTabs(tabs) + id + "\n");
+        }*/
+
+
         if(expression != null){
             expression.buildString(builder, tabs + 1);
         }
+
+        builder.append(insertTabs(tabs + 1) + Token.SEMICOLON + " ;\n");
 
     }
 

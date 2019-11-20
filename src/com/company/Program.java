@@ -21,6 +21,7 @@ public class Program {
 				//inputFileName = args[0];
 				//outputFileName = args[1];
 
+				//inputFileName = "P";
 				inputFileName = "C:\\Users\\Peter\\IdeaProjects\\propAssign0\\src\\com\\company\\program2.txt";
 				outputFileName = "C:\\Users\\Peter\\IdeaProjects\\propAssign0\\src\\com\\company\\program2_output.txt";
 
