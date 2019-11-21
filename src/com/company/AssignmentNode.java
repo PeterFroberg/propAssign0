@@ -16,7 +16,7 @@ public class AssignmentNode implements INode {
                 System.out.println("AssignmentNode: " + tokenizer.getCurrentLexeme().token().toString() + " - NodeLevel: ");
                 //id = tokenizer.getCurrentLexeme();
                 tokenizer.moveNext();
-                expression = new ExpressionNode(tokenizer);
+                expression = new ExpressionNode(tokenizer, null);
 
                 if (tokenizer.getCurrentLexeme().token() == Token.SEMICOLON) {
                     System.out.println("AssignmentNode: " + tokenizer.getCurrentLexeme().token().toString() + " - NodeLevel: ");

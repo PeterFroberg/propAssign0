@@ -38,7 +38,14 @@ public class TermNode implements INode {
         if(term == null){
             return factorvalue;
         }else{
-            Double termValue = Double.parseDouble(term.evaluate(args).toString());
+            Double termValue;
+            if(term.operator!= null && term.operator.token() == Token.DIV_OP){
+                Double secondTermFactor = Double.parseDouble(term.getFactor().evaluate(args).toString());
+                factorvalue = factorvalue / secondTermFactor;
+                termValue = Double.parseDouble(term.term.evaluate(args).toString());
+            }else {
+                termValue = Double.parseDouble(term.evaluate(args).toString());
+            }
             if(operator.token() == Token.MULT_OP){
                 return factorvalue * termValue;
             }else{
@@ -74,5 +81,9 @@ public class TermNode implements INode {
             tabsToadd = tabsToadd + "\t";
         }
         return tabsToadd;
+    }
+
+    public FactorNode getFactor() {
+        return factor;
     }
 }

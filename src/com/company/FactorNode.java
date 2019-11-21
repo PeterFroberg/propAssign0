@@ -18,7 +18,7 @@ public class FactorNode implements INode {
             System.out.println("Factor: " + tokenizer.getCurrentLexeme().toString());
             id = tokenizer.getCurrentLexeme();
             tokenizer.moveNext();
-            expression = new ExpressionNode(tokenizer);
+            expression = new ExpressionNode(tokenizer,null);
             if (tokenizer.getCurrentLexeme().token() == Token.RIGHT_PAREN) {
                 rightParent = tokenizer.getCurrentLexeme();
                 System.out.println("FactorNode: RIGHT" + tokenizer.getCurrentLexeme().toString());
