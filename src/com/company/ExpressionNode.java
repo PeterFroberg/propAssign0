@@ -28,19 +28,42 @@ public class ExpressionNode implements INode {
 
     @Override
     public Object evaluate(Object[] args) throws Exception {
-        Double termValue = Double.parseDouble(term.evaluate(args).toString());
-        if(previousOperator != null && previousOperator.token() == Token.SUB_OP ){
+
+        double termNodeValue = Double.parseDouble(term.evaluate(args).toString());
+
+        if (expression == null) {
+            return termNodeValue;
+        } else {
+            double exprNodeValue = Double.parseDouble(expression.evaluate(args).toString());
+            if (operator.token() == Token.ADD_OP) {
+                if (previousOperator != null && previousOperator.token() == Token.SUB_OP) {
+                    return exprNodeValue - termNodeValue;
+                }
+                return termNodeValue + exprNodeValue;
+            } else {
+                return termNodeValue - exprNodeValue;
+            }
+        }
+
+
+
+        /*Double termValue = Double.parseDouble(term.evaluate(args).toString());
+        //if(previousOperator != null && previousOperator.token() == Token.SUB_OP ){
             //double temp = -1.0;
             //termValue = termValue * temp;
-            termValue = -termValue;
-        }
-        if(expression == null){
+          //  termValue = -termValue;
+        //}
+            if(expression == null){
             return termValue;
         }else {
             Double expressionValue = Double.parseDouble(expression.evaluate(args).toString());
-            return termValue + expressionValue;
+            if(previousOperator != null && previousOperator.token() == Token.SUB_OP){
+                return expressionValue - termValue;
+            }else{
+                return termValue + expressionValue;
+            }
         }
-            /*if(operator.token() == Token.ADD_OP){
+            *//*if(operator.token() == Token.ADD_OP){
                 return  termValue + expressionValue;
             }else{
                 return termValue - expressionValue;
