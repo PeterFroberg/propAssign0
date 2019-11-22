@@ -12,6 +12,8 @@ public class StatementNode implements INode {
             System.out.println("StementNode: " + tokenizer.getCurrentLexeme().toString() + " - NodeLevel: ");
             assignment = new AssignmentNode(tokenizer);
             statment = new StatementNode(tokenizer);
+        }else if(tokenizer.getNextLexeme().token() != Token.EOF){
+            throw new ParserException("Syntax error, Identifier expected");
         }
     }
 
