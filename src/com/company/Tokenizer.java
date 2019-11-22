@@ -118,7 +118,7 @@ public class Tokenizer implements ITokenizer {
                     }
                     return new Lexeme(digitBuilder.toString(), Token.INT_LIT);
                 }
-                throw new TokenizerException("Illegal token found in file!");
+                throw new TokenizerException("Illegal token " + scanner.current() + " found in file!");
         }
     }
 
