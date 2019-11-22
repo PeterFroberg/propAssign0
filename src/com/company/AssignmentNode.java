@@ -14,12 +14,10 @@ public class AssignmentNode implements INode {
             tokenizer.moveNext();
 
             if (tokenizer.getCurrentLexeme().token() == Token.ASSIGN_OP) {
-                System.out.println("AssignmentNode: " + tokenizer.getCurrentLexeme().token().toString() + " - NodeLevel: ");
                 tokenizer.moveNext();
                 expression = new ExpressionNode(tokenizer, null);
 
                 if (tokenizer.getCurrentLexeme().token() == Token.SEMICOLON) {
-                    System.out.println("AssignmentNode: " + tokenizer.getCurrentLexeme().token().toString() + " - NodeLevel: ");
                     tokenizer.moveNext();
                 }else {
                     throw new ParserException("Syntax error, Semicolon expected, got: " + tokenizer.getCurrentLexeme().token().toString());

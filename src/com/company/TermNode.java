@@ -12,7 +12,6 @@ public class TermNode implements INode {
         factor = new FactorNode(tokenizer);
 
         if (tokenizer.getCurrentLexeme().token() == Token.MULT_OP || tokenizer.getCurrentLexeme().token() == Token.DIV_OP) {
-            System.out.println("TermNode: " + tokenizer.getCurrentLexeme().toString());
             operator = tokenizer.getCurrentLexeme();
             tokenizer.moveNext();
 

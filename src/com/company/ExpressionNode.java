@@ -12,12 +12,9 @@ public class ExpressionNode implements INode {
     public ExpressionNode(Tokenizer tokenizer, Lexeme previousOperator) throws Exception {
         this.previousOperator = previousOperator;
 
-        System.out.println("ExpressionNode: " + tokenizer.getCurrentLexeme().toString() + " - NodeLevel: ");
-
         term = new TermNode(tokenizer);
 
         if (tokenizer.getCurrentLexeme().token() == Token.SUB_OP || tokenizer.getCurrentLexeme().token() == Token.ADD_OP) {
-            System.out.println("ExpressionNode: " + tokenizer.getCurrentLexeme().toString() + " - NodeLevel: ");
             operator = tokenizer.getCurrentLexeme();
             tokenizer.moveNext();
             expression = new ExpressionNode(tokenizer, operator);

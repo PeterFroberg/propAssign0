@@ -9,7 +9,6 @@ public class StatementNode implements INode {
 
     public StatementNode(Tokenizer tokenizer) throws Exception {
         if (tokenizer.getCurrentLexeme().token() == Token.IDENT) {
-            System.out.println("StementNode: " + tokenizer.getCurrentLexeme().toString() + " - NodeLevel: ");
             assignment = new AssignmentNode(tokenizer);
             statment = new StatementNode(tokenizer);
         }else if(tokenizer.getNextLexeme().token() != Token.EOF){

@@ -11,18 +11,15 @@ public class FactorNode implements INode {
     public FactorNode(Tokenizer tokenizer) throws Exception {
 
         if (tokenizer.getCurrentLexeme().token() == Token.INT_LIT || tokenizer.getCurrentLexeme().token() == Token.IDENT) { // || tokenizer.getCurrentLexeme().token() == Token.LEFT_PAREN) {
-            System.out.println("FactorNode: " + tokenizer.getCurrentLexeme().toString());
             id = tokenizer.getCurrentLexeme();
             tokenizer.moveNext();
 
         } else if (tokenizer.getCurrentLexeme().token() == Token.LEFT_PAREN) {
-            System.out.println("Factor: " + tokenizer.getCurrentLexeme().toString());
             id = tokenizer.getCurrentLexeme();
             tokenizer.moveNext();
             expression = new ExpressionNode(tokenizer, null);
             if (tokenizer.getCurrentLexeme().token() == Token.RIGHT_PAREN) {
                 rightParent = tokenizer.getCurrentLexeme();
-                System.out.println("FactorNode: RIGHT" + tokenizer.getCurrentLexeme().toString());
                 tokenizer.moveNext();
             } else {
                 throw new ParserException("Wrong token, expected: RIGHT_PAREN, got: " + tokenizer.getCurrentLexeme().token().toString());

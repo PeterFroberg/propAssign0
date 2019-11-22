@@ -11,14 +11,12 @@ public class BlockNode implements INode {
         if (tokenizer.getCurrentLexeme().token() != Token.LEFT_CURLY) {
             throw new ParserException("Wrong token found at begining av program { expected!");
         }
-        System.out.println("BlockNode: " + tokenizer.getCurrentLexeme().toString() + " - NodeLevel: ");
         tokenizer.moveNext();
         statementNode = new StatementNode(tokenizer);
 
         if (tokenizer.getCurrentLexeme().token() != Token.RIGHT_CURLY) {
             throw new ParserException("Wrong token found at end av program } expected!");
         }
-        System.out.println("BlockNode: " + tokenizer.getCurrentLexeme().toString() + " - NodeLevel: ");
         tokenizer.moveNext();
     }
 
