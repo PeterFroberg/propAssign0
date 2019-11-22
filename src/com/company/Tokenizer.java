@@ -1,3 +1,5 @@
+// Peter Fröberg, pefr7147@student.su.se
+// Douglas Hammarstam, doha6991@student.su.se
 package com.company;
 
 import java.io.IOException;
@@ -46,10 +48,7 @@ public class Tokenizer implements ITokenizer {
     }
 
     private Lexeme extractLexeme() throws IOException, TokenizerException {
-        // TODO: implement the lexeme extraction algorithm
         consumeWhiteSpaces();
-        //char currentChar = scanner.current();
-        //scanner.moveNext();
 
         Lexeme tempLexeme;
         switch (scanner.current()) {
@@ -108,7 +107,6 @@ public class Tokenizer implements ITokenizer {
                     while (Character.isLetter(scanner.current())) {
                         letterBuilder.append(scanner.current());
                         scanner.moveNext();
-                        //currentChar = scanner.current();
                     }
                     return new Lexeme(letterBuilder.toString(), Token.IDENT);
                 } else if (Character.isDigit(scanner.current()) && scanner.current() >= '0' && scanner.current() <= '9') {
@@ -116,23 +114,12 @@ public class Tokenizer implements ITokenizer {
                     while (Character.isDigit(scanner.current())) {
                         digitBuilder.append(scanner.current());
                         scanner.moveNext();
-                        //currentChar = scanner.current();
+
                     }
                     return new Lexeme(digitBuilder.toString(), Token.INT_LIT);
                 }
                 throw new TokenizerException("Illegal token found in file!");
-
         }
-
-
-    }
-
-    public Scanner getScanner() {
-        return scanner;
-    }
-
-    public void setScanner(Scanner scanner) {
-        this.scanner = scanner;
     }
 
     public Lexeme getCurrentLexeme() {
@@ -147,7 +134,5 @@ public class Tokenizer implements ITokenizer {
         return nextLexeme;
     }
 
-    public void setNextLexeme(Lexeme nextLexeme) {
-        this.nextLexeme = nextLexeme;
-    }
+
 }

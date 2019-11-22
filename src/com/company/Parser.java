@@ -1,3 +1,5 @@
+// Peter Fröberg, pefr7147@student.su.se
+// Douglas Hammarstam, doha6991@student.su.se
 package com.company;
 
 import java.io.IOException;
@@ -21,21 +23,6 @@ public class Parser implements IParser {
         if (tokenizer == null) {
             throw new IOException("No file open");
         }
-        //tokenizer.moveNext();
-
-        //rootNode.evaluate()
-
-
-        //tokenizer.moveNext();
-
-
-        //System.out.println("test");
-
-
-
-        //while (tokenizer.peekNextLexeme().token() != Token.EOF) {
-        //    tokenizer.moveNext();
-        //}
         return rootNode;
     }
 

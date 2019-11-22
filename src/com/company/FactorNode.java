@@ -1,3 +1,5 @@
+// Peter Fröberg, pefr7147@student.su.se
+// Douglas Hammarstam, doha6991@student.su.se
 package com.company;
 
 public class FactorNode implements INode {
@@ -13,12 +15,11 @@ public class FactorNode implements INode {
             id = tokenizer.getCurrentLexeme();
             tokenizer.moveNext();
 
-
         } else if (tokenizer.getCurrentLexeme().token() == Token.LEFT_PAREN) {
             System.out.println("Factor: " + tokenizer.getCurrentLexeme().toString());
             id = tokenizer.getCurrentLexeme();
             tokenizer.moveNext();
-            expression = new ExpressionNode(tokenizer,null);
+            expression = new ExpressionNode(tokenizer, null);
             if (tokenizer.getCurrentLexeme().token() == Token.RIGHT_PAREN) {
                 rightParent = tokenizer.getCurrentLexeme();
                 System.out.println("FactorNode: RIGHT" + tokenizer.getCurrentLexeme().toString());
@@ -29,11 +30,7 @@ public class FactorNode implements INode {
 
         } else
             throw new ParserException("Wrong token, expected: LEFT_PAREM, got: " + tokenizer.getCurrentLexeme().token().toString());
-
-
     }
-
-    //}
 
     @Override
     public Object evaluate(Object[] args) throws Exception {
@@ -51,7 +48,6 @@ public class FactorNode implements INode {
         }
         return expression.evaluate(args);
 
-
     }
 
     @Override
@@ -67,8 +63,6 @@ public class FactorNode implements INode {
             expression.buildString(builder, tabs + 1);
             builder.append(insertTabs(tabs + 1) + rightParent + "\n");
         }
-
-
     }
 
     private String insertTabs(int tabs) {

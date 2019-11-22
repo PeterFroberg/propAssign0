@@ -1,3 +1,5 @@
+// Peter Fröberg, pefr7147@student.su.se
+// Douglas Hammarstam, doha6991@student.su.se
 package com.company;
 
 public class ExpressionNode implements INode {
@@ -14,7 +16,6 @@ public class ExpressionNode implements INode {
 
         term = new TermNode(tokenizer);
 
-
         if (tokenizer.getCurrentLexeme().token() == Token.SUB_OP || tokenizer.getCurrentLexeme().token() == Token.ADD_OP) {
             System.out.println("ExpressionNode: " + tokenizer.getCurrentLexeme().toString() + " - NodeLevel: ");
             operator = tokenizer.getCurrentLexeme();
@@ -23,7 +24,6 @@ public class ExpressionNode implements INode {
         } else if (tokenizer.current().token() != Token.INT_LIT && tokenizer.current().token() != Token.IDENT && tokenizer.current().token() != Token.RIGHT_PAREN && tokenizer.current().token() != Token.SEMICOLON) {
             throw new ParserException("Wrong token, expected: SUB_OP OR ADD_OP, got: " + tokenizer.getCurrentLexeme().token().toString());
         }
-
     }
 
     @Override
@@ -44,31 +44,6 @@ public class ExpressionNode implements INode {
                 return termNodeValue - exprNodeValue;
             }
         }
-
-
-
-        /*Double termValue = Double.parseDouble(term.evaluate(args).toString());
-        //if(previousOperator != null && previousOperator.token() == Token.SUB_OP ){
-            //double temp = -1.0;
-            //termValue = termValue * temp;
-          //  termValue = -termValue;
-        //}
-            if(expression == null){
-            return termValue;
-        }else {
-            Double expressionValue = Double.parseDouble(expression.evaluate(args).toString());
-            if(previousOperator != null && previousOperator.token() == Token.SUB_OP){
-                return expressionValue - termValue;
-            }else{
-                return termValue + expressionValue;
-            }
-        }
-            *//*if(operator.token() == Token.ADD_OP){
-                return  termValue + expressionValue;
-            }else{
-                return termValue - expressionValue;
-            }
-        }*/
     }
 
     @Override

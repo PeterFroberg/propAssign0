@@ -1,3 +1,5 @@
+// Peter Fröberg, pefr7147@student.su.se
+// Douglas Hammarstam, doha6991@student.su.se
 package com.company;
 
 public class AssignmentNode implements INode {
@@ -5,10 +7,9 @@ public class AssignmentNode implements INode {
     private Lexeme id;
     private ExpressionNode expression;
 
-
     public AssignmentNode(Tokenizer tokenizer) throws Exception {
 
-        if(tokenizer.getCurrentLexeme().token() == Token.IDENT) {
+        if (tokenizer.getCurrentLexeme().token() == Token.IDENT) {
             id = tokenizer.getCurrentLexeme();
             tokenizer.moveNext();
 
@@ -26,7 +27,6 @@ public class AssignmentNode implements INode {
         }
     }
 
-
     @Override
     public Object evaluate(Object[] args) throws Exception {
 
@@ -36,21 +36,16 @@ public class AssignmentNode implements INode {
     @Override
     public void buildString(StringBuilder builder, int tabs) {
 
-        builder.append(insertTabs(tabs) + "AssigmentNode\n" + insertTabs(tabs +1) + id + "\n" + insertTabs(tabs + 1) + Token.ASSIGN_OP + " =\n");
-        /*if(id != null){
-            builder.append(insertTabs(tabs) + id + "\n");
-        }*/
+        builder.append(insertTabs(tabs) + "AssigmentNode\n" + insertTabs(tabs + 1) + id + "\n" + insertTabs(tabs + 1) + Token.ASSIGN_OP + " =\n");
 
-
-        if(expression != null){
+        if (expression != null) {
             expression.buildString(builder, tabs + 1);
         }
 
         builder.append(insertTabs(tabs + 1) + Token.SEMICOLON + " ;\n");
-
     }
 
-    private String insertTabs(int tabs){
+    private String insertTabs(int tabs) {
         String tabsToadd = "";
         for (int i = 0; i < tabs; i++) {
             tabsToadd = tabsToadd + "\t";
