@@ -17,7 +17,7 @@ public class TermNode implements INode {
             tokenizer.moveNext();
 
             term = new TermNode(tokenizer);
-        } else if (tokenizer.current().token() != Token.SUB_OP && tokenizer.current().token() != Token.ADD_OP && tokenizer.current().token() != Token.INT_LIT && tokenizer.current().token() != Token.IDENT && tokenizer.current().token() != Token.RIGHT_PAREN && tokenizer.current().token() != Token.SEMICOLON) {
+        } else if (tokenizer.current().token() != Token.SUB_OP && tokenizer.current().token() != Token.ADD_OP && tokenizer.current().token() != Token.INT_LIT && tokenizer.current().token() != Token.IDENT && tokenizer.current().token() != Token.RIGHT_PAREN && tokenizer.current().token() != Token.SEMICOLON && tokenizer.getNextLexeme() != null && tokenizer.getNextLexeme().token() != Token.LEFT_PAREN && tokenizer.getNextLexeme().token() != Token.EOF) {
             throw new ParserException("Wrong token, expected: MULT_OP or DIV_OP, got: " + tokenizer.getCurrentLexeme().token().toString());
         }
     }

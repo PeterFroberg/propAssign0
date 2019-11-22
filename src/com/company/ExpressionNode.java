@@ -21,7 +21,7 @@ public class ExpressionNode implements INode {
             operator = tokenizer.getCurrentLexeme();
             tokenizer.moveNext();
             expression = new ExpressionNode(tokenizer, operator);
-        } else if (tokenizer.current().token() != Token.INT_LIT && tokenizer.current().token() != Token.IDENT && tokenizer.current().token() != Token.RIGHT_PAREN && tokenizer.current().token() != Token.SEMICOLON) {
+        } else if (tokenizer.current().token() != Token.INT_LIT && tokenizer.current().token() != Token.IDENT && tokenizer.current().token() != Token.RIGHT_PAREN && tokenizer.current().token() != Token.SEMICOLON && tokenizer.getNextLexeme() != null && tokenizer.getNextLexeme().token() != Token.EOF) {
             throw new ParserException("Wrong token, expected: SUB_OP OR ADD_OP, got: " + tokenizer.getCurrentLexeme().token().toString());
         }
     }
