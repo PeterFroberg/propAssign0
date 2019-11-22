@@ -13,7 +13,7 @@ public class StatementNode implements INode {
             assignment = new AssignmentNode(tokenizer);
             statment = new StatementNode(tokenizer);
         }else if(tokenizer.getNextLexeme().token() != Token.EOF){
-            throw new ParserException("Syntax error, Identifier expected");
+            throw new ParserException("Syntax error, Identifier expected, got: " + tokenizer.getCurrentLexeme().token().toString());
         }
     }
 

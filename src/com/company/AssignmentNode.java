@@ -22,10 +22,10 @@ public class AssignmentNode implements INode {
                     System.out.println("AssignmentNode: " + tokenizer.getCurrentLexeme().token().toString() + " - NodeLevel: ");
                     tokenizer.moveNext();
                 }else {
-                    throw new ParserException("Syntax error, Semicolon expected");
+                    throw new ParserException("Syntax error, Semicolon expected, got: " + tokenizer.getCurrentLexeme().token().toString());
                 }
             }else {
-                throw new ParserException("Syntax error, assignment expected");
+                throw new ParserException("Syntax error, assignment expected, got: " + tokenizer.getCurrentLexeme().token().toString());
             }
         }
     }
